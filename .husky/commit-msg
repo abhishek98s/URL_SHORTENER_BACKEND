@@ -1,0 +1,22 @@
+commit_msg_file="$1"
+first_line=$(head -n 1 "$commit_msg_file")
+
+if printf '%s' "$first_line" | grep -qE '^(init|feat|fix|chore): [^[:space:]].*$'; then
+  exit 0
+fi
+
+echo ""
+echo "Invalid commit message: $first_line"
+echo ""
+echo "Commit messages must follow this format:"
+echo "  <prefix>: <commit message>"
+echo ""
+echo "Allowed prefixes: init, feat, fix, chore"
+echo ""
+echo "Examples:"
+echo "  feat: add url shortener endpoint"
+echo "  fix: rebase issue"
+echo "  chore: update dependencies"
+echo "  init: project setup"
+echo ""
+exit 1
